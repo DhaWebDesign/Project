@@ -2,8 +2,15 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
-
+    
+    if params[:radio_input] == 'name'
+      @products = Product.order("title")
+    elsif params[:radio_input] == 'price'
+        @products = Product.order("price")
+    else
+      @products = Product.order("created_at")
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
